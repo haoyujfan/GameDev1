@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://by5yfntgvwk1w"]
+
+[ext_resource type="Script" path="res://Main.cs" id="1_gra5v"]
+[ext_resource type="PackedScene" uid="uid://br78drnhi450l" path="res://Enemy.tscn" id="2_je2ao"]
+[ext_resource type="PackedScene" uid="uid://dh6cqotnf5o7k" path="res://Player.tscn" id="3_18geb"]
+[ext_resource type="PackedScene" uid="uid://bnaylega2j2jj" path="res://HUD.tscn" id="4_3rwv6"]
+[ext_resource type="AudioStream" uid="uid://dpkc3pns23c4j" path="res://arts/squish_die.mp3" id="5_gaekx"]
+[ext_resource type="PackedScene" uid="uid://kr2p4t6rj5yh" path="res://PowerDot.tscn" id="6_dm1oc"]
+
+[sub_resource type="Curve2D" id="Curve2D_p1seg"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_gra5v")
+EnemyScene = ExtResource("2_je2ao")
+PowerDotScene = ExtResource("6_dm1oc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.972549, 0.866667, 0.905882, 1)
+
+[node name="Player" parent="." instance=ExtResource("3_18geb")]
+
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="PowerDotTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 450)
+
+[node name="EnemyPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_p1seg")
+
+[node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemyPath"]
+
+[node name="HUD" parent="." instance=ExtResource("4_3rwv6")]
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_gaekx")
+
+[connection signal="Hit" from="Player" to="." method="GameOver"]
+[connection signal="PowerHit" from="Player" to="." method="PowerUp"]
+[connection signal="timeout" from="EnemyTimer" to="." method="OnEnemyTimerTimeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="OnScoreTimerTimeout"]
+[connection signal="timeout" from="StartTimer" to="." method="OnStartTimerTimeout"]
+[connection signal="timeout" from="PowerDotTimer" to="." method="OnPowerDotTimerTimeout"]
+[connection signal="StartGame" from="HUD" to="." method="NewGame"]

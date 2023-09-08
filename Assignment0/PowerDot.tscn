@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://kr2p4t6rj5yh"]
+
+[ext_resource type="Script" path="res://PowerDot.cs" id="1_huruu"]
+[ext_resource type="Texture2D" uid="uid://llks0j61w8rg" path="res://arts/rat1.png" id="1_no0l1"]
+[ext_resource type="Texture2D" uid="uid://dxbepw3jn5tex" path="res://arts/rat2.png" id="2_ewq4v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4yxn3"]
+radius = 16.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1w6db"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_no0l1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ewq4v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PowerDot" type="RigidBody2D" groups=["powerdots"]]
+position = Vector2(100, 500)
+gravity_scale = 2.66454e-15
+script = ExtResource("1_huruu")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4yxn3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1w6db")
