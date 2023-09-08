@@ -10,6 +10,7 @@ Click start game when ready to play. Move the character up, left, down, and righ
 
 Acknowledgements:
 
+game guide - https://docs.godotengine.org/en/stable/getting_started/first_2d_game/index.html
 player sprite - https://lionheart963.itch.io/blob-sprite
 enemy sprite - https://www.deviantart.com/generaljerzy/art/Bug-Splat-Blob-sprite-381086077
 powerup sprite - https://opengameart.org/content/gerbil-sprite
